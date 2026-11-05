@@ -1,0 +1,131 @@
+* { box-sizing: border-box; }
+html, body, #root { margin: 0; height: 100%; overflow: hidden; }
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: #0f172a;
+  background: #dbeafe;
+  user-select: none;
+}
+canvas { touch-action: none; }
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border: 0;
+  border-radius: 8px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #0f172a;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.15);
+}
+button:hover { background: #fff; }
+
+kbd {
+  display: inline-block;
+  min-width: 20px;
+  padding: 1px 5px;
+  margin-right: 3px;
+  border: 1px solid #cbd5e1;
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: #f8fafc;
+  font-size: 12px;
+  text-align: center;
+}
+
+.panel {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(6px);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.15);
+}
+
+/* Màn hình đăng nhập */
+.join-overlay {
+  position: fixed; inset: 0;
+  display: grid; place-items: center;
+  background: rgba(15, 23, 42, 0.35);
+}
+.join-card {
+  width: min(380px, 92vw);
+  padding: 28px;
+  display: flex; flex-direction: column; gap: 10px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.35);
+}
+.join-card h1 { margin: 0; font-size: 26px; }
+.join-card p { margin: 0 0 8px; color: #475569; }
+.join-card label { font-weight: 600; font-size: 14px; }
+.join-card input {
+  font: inherit; padding: 10px 12px;
+  border: 1px solid #cbd5e1; border-radius: 8px;
+}
+.join-card input:focus { outline: 2px solid #3b82f6; border-color: transparent; }
+.colors { display: flex; gap: 10px; }
+.colors button { width: 34px; height: 34px; border-radius: 50%; padding: 0; }
+.colors button.selected { outline: 3px solid #0f172a; outline-offset: 2px; }
+.primary { margin-top: 10px; background: #2563eb; color: #fff; font-weight: 600; padding: 12px; }
+.primary:hover { background: #1d4ed8; }
+.primary:disabled { background: #94a3b8; cursor: not-allowed; }
+
+/* HUD */
+.hud { position: fixed; inset: 0; pointer-events: none; }
+.hud > * { pointer-events: auto; }
+.top-left { position: absolute; top: 16px; left: 16px; padding: 10px 16px; }
+.zone-label { font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
+.zone { font-size: 20px; font-weight: 700; }
+.stats { margin-top: 4px; font-size: 13px; color: #475569; }
+.top-right { position: absolute; top: 16px; right: 16px; display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.help { position: absolute; top: 110px; left: 16px; width: 320px; padding: 4px 16px 10px; font-size: 13px; }
+.help h4 { margin: 10px 0 4px; }
+.help ul { margin: 0; padding-left: 18px; line-height: 1.8; }
+.prompt {
+  position: absolute; bottom: 90px; left: 50%; transform: translateX(-50%);
+  font-size: 16px; font-weight: 600; padding: 12px 20px;
+  background: #0f172a; color: #fff;
+}
+.prompt:hover { background: #1e293b; }
+.prompt kbd { color: #0f172a; }
+.toast {
+  position: absolute; top: 80px; left: 50%; transform: translateX(-50%);
+  max-width: min(520px, 90vw); padding: 12px 18px; text-align: center;
+  animation: fade-in 0.25s ease-out;
+}
+@keyframes fade-in { from { opacity: 0; transform: translate(-50%, -8px); } }
+.minimap { position: absolute; bottom: 16px; right: 16px; padding: 8px; line-height: 0; }
+
+.touchpad {
+  position: absolute; bottom: 20px; left: 20px;
+  display: none;
+  grid-template-areas: '. up .' 'left down right';
+  gap: 6px;
+}
+.touchpad button { width: 56px; height: 56px; font-size: 20px; touch-action: none; }
+.touchpad .up { grid-area: up; }
+.touchpad .left { grid-area: left; }
+.touchpad .down { grid-area: down; }
+.touchpad .right { grid-area: right; }
+@media (pointer: coarse) {
+  .touchpad { display: grid; }
+  .help { display: none; }
+  .minimap svg { width: 120px; height: 80px; }
+}
+
+/* Nhãn trong cảnh 3D */
+.name-tag {
+  padding: 2px 8px; border-radius: 10px;
+  background: rgba(15, 23, 42, 0.75); color: #fff;
+  font-size: 13px; white-space: nowrap; pointer-events: none;
+}
+.name-tag.me { background: #2563eb; font-weight: 600; }
+.desk-tag {
+  padding: 1px 6px; border-radius: 6px;
+  background: rgba(255, 255, 255, 0.85); color: #334155;
+  font-size: 11px; white-space: nowrap; pointer-events: none;
+}
+.desk-tag.me { background: #fde68a; font-weight: 600; }
+.tv-content { width: 280px; color: #fff; font-size: 18px; pointer-events: none; }
+.tv-content h3 { margin: 0 0 8px; font-size: 24px; }
+.tv-content p { margin: 4px 0; }
+.logo-wall { font-size: 40px; font-weight: 800; color: #0f766e; letter-spacing: 0.1em; pointer-events: none; white-space: nowrap; }
